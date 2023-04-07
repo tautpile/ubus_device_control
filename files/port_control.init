@@ -1,0 +1,23 @@
+#!/bin/sh /etc/rc.common
+
+START=50
+USE_PROCD=1
+
+start_service() {
+
+	        procd_open_instance
+	        procd_set_param command /usr/bin/port_control		
+	        procd_set_param pidfile /var/run/port_control.pid
+		procd_set_param file /etc/config/port_control
+        	procd_close_instance
+}
+
+service_triggers() {
+	procd_add_reload_trigger "port_control"
+}
+
+reload_service() {
+	stop
+	start
+}
+
